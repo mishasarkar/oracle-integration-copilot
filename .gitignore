@@ -10,8 +10,8 @@ build/
 .venv/
 venv/
 
-# FAISS index (rebuilt from docs; can be large)
-data/index/
+# # FAISS index (rebuilt from docs; can be large)
+# data/index/
 
 # Streamlit cache
 .streamlit/

@@ -12,13 +12,27 @@ def _json_block(payload) -> str:
     return json.dumps(payload, indent=2) if not isinstance(payload, str) else payload
 
 
+def _normalise_pattern(raw: str) -> str:
+    p = raw.lower().replace("-", "_").replace(" ", "_")
+    if "schedule" in p:
+        return "scheduled"
+    if "event" in p:
+        return "event_driven"
+    if "request" in p or "response" in p or "synchronous" in p:
+        return "request_response"
+    if "file" in p or "ftp" in p or "sftp" in p or "batch" in p:
+        return "file_based"
+    return "scheduled"  # safe default for REST-based integrations
+
+
 def _mermaid_diagram(spec: IntegrationSpec) -> str:
     src = spec.source.get("system", "Source")
     tgt = spec.target.get("system", "Target")
+    pattern = _normalise_pattern(spec.pattern)
 
     lines = ["```mermaid", "sequenceDiagram"]
 
-    if spec.pattern == "scheduled":
+    if pattern == "scheduled":
         lines += [
             f"    participant Scheduler",
             f"    participant OIC as Oracle Integration Cloud",
@@ -38,7 +52,7 @@ def _mermaid_diagram(spec: IntegrationSpec) -> str:
             "        OIC->>Notify: Alert (Slack / email)",
             "    end",
         ]
-    elif spec.pattern == "event_driven":
+    elif pattern == "event_driven":
         lines += [
             f"    participant Src as {src}",
             f"    participant OIC as Oracle Integration Cloud",
@@ -50,7 +64,7 @@ def _mermaid_diagram(spec: IntegrationSpec) -> str:
             f"    Tgt-->>OIC: Response",
             "    OIC-->>Src: Acknowledgement",
         ]
-    elif spec.pattern == "request_response":
+    elif pattern == "request_response":
         lines += [
             "    participant Caller",
             f"    participant OIC as Oracle Integration Cloud",
@@ -83,7 +97,7 @@ def render(spec: IntegrationSpec) -> str:
     lines: list[str] = []
 
     lines.append(f"# {spec.title}")
-    lines.append(f"\n**Pattern:** `{spec.pattern}`  ")
+    lines.append(f"\n**Pattern:** `{_normalise_pattern(spec.pattern)}`  ")
     lines.append(
         f"**Flow:** {spec.source.get('system', 'Source')} "
         f"→ Oracle Integration Cloud "

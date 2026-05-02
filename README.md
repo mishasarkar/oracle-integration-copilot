@@ -200,6 +200,30 @@ A separate AI call reads the full design and asks a different question: "what di
 
 ---
 
+## What each file does
+
+A quick plain-English guide to the codebase for anyone reading it for the first time.
+
+| File | What it does |
+|---|---|
+| `app.py` | Runs the browser interface. When you open the tool in your browser, this is the file that draws the page, takes your input, and shows you the result. |
+| `copilot/schemas.py` | Defines the shape of the data the tool works with — what an "intent" looks like and what a "design spec" looks like. Every other file agrees to use these same shapes. |
+| `copilot/config.py` | Reads your settings from the `.env` file — things like your API key and which AI model to use — and makes them available to the rest of the tool. |
+| `copilot/ingest.py` | Reads all the Oracle reference documents, breaks them into small chunks, and builds a searchable index on disk. This only runs once; after that the index is reused. |
+| `copilot/retriever.py` | Takes the key facts from your requirement and searches the document index for the most relevant pages. It finds pages by meaning, not just by matching words. |
+| `copilot/parser.py` | Sends your plain-English requirement to the AI and asks it to pull out the structured facts — which systems, what schedule, what filters. If the AI's first answer is not quite right, it tries once more automatically. |
+| `copilot/designer.py` | The main brain of the tool. It takes the structured facts, the relevant documentation pages, and some worked examples, then asks the AI to write a complete integration design. It also runs the critic step that checks the design for gaps. |
+| `copilot/renderers/markdown.py` | Turns the finished design — which is just data at this point — into a nicely formatted document with a diagram, a mapping table, and sample data blocks. |
+| `copilot/__main__.py` | The entry point for the terminal version of the tool. When you type `python -m copilot "..."`, this file is what runs first. |
+| `copilot/prompts/parser.txt` | The instruction card the AI reads before parsing your requirement. Changing this file changes how the AI extracts information, without touching any Python code. |
+| `copilot/prompts/designer.txt` | The instruction card the AI reads before writing the integration design. This is where the detail and quality of the output is shaped. |
+| `copilot/prompts/critic.txt` | The instruction card for the second AI pass. It tells the AI to read the design critically and look for things that were assumed or left unanswered. |
+| `tests/test_parser.py` | Automated checks that confirm the parser handles good input, bad input, and retry situations correctly — without needing to call the real AI. |
+| `tests/test_retriever.py` | Automated checks that confirm the document search finds the right pages and builds the right search query from the intent. |
+| `tests/test_schemas.py` | Automated checks that confirm the data shapes are enforced correctly — for example, that an invalid integration pattern is rejected. |
+
+---
+
 ## Quickstart
 
 ```bash
