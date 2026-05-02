@@ -171,6 +171,17 @@ The tool produces a complete design document containing:
 
 ## What happens after an intent is issued?
 
+```mermaid
+flowchart LR
+    A["🧠 Step 1\nParse Intent\n⏱ 2–5 sec"]:::step1 --> B["🔍 Step 2\nSearch Docs\n⏱ 5–15 sec"]:::step2 --> C["✍️ Step 3\nWrite Design\n⏱ 60–90 sec"]:::step3 --> D["🔎 Step 4\nCritic Review\n⏱ 30–60 sec"]:::step4 --> E["📄 Design\nSpec Ready"]:::done
+
+    classDef step1 fill:#4A90D9,stroke:#2c6fa8,color:#ffffff
+    classDef step2 fill:#27AE60,stroke:#1a7d42,color:#ffffff
+    classDef step3 fill:#8E44AD,stroke:#6c2f84,color:#ffffff
+    classDef step4 fill:#E67E22,stroke:#b55e0e,color:#ffffff
+    classDef done  fill:#2ECC71,stroke:#1aad5c,color:#ffffff
+```
+
 When you submit a requirement, the tool works through four steps in sequence. Each step is doing real, meaningful work — here is what is happening behind the scenes and why it takes the time it does.
 
 **Step 1 — The AI reads your sentence (2–5 seconds)**
