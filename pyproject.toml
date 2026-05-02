@@ -1,0 +1,42 @@
+[project]
+name = "oracle-integration-copilot"
+version = "0.1.0"
+description = "AI-powered Oracle Integration Cloud design assistant"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "anthropic>=0.40.0",
+    "langchain>=0.3.0",
+    "langchain-community>=0.3.0",
+    "langchain-huggingface>=0.1.0",
+    "langchain-text-splitters>=0.3.0",
+    "faiss-cpu>=1.8.0",
+    "sentence-transformers>=3.0.0",
+    "pydantic>=2.7.0",
+    "python-dotenv>=1.0.0",
+    "streamlit>=1.40.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=5.0.0",
+]
+
+[project.scripts]
+copilot = "copilot.__main__:main"
+
+[build-system]
+requires = ["setuptools>=70"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["copilot*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=copilot --cov-report=term-missing"
+
+[tool.coverage.run]
+omit = ["copilot/__main__.py"]

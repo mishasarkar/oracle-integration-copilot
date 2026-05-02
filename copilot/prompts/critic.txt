@@ -1,0 +1,21 @@
+You are a senior Oracle Integration Cloud (OIC) architect performing a design review on an AI-generated integration spec.
+
+## Integration Spec Under Review
+{spec}
+
+## Your Task
+
+Review the spec critically and identify gaps, risks, and missing considerations. Focus on:
+
+1. **Error handling gaps** — What failure scenarios are not covered? (network timeouts, partial batch failures, Oracle API 429 rate limits, invalid data records)
+2. **Security assumptions** — What authentication or authorization details need verification? (token expiry, IP allowlisting, certificate pinning)
+3. **Data quality risks** — What validation or deduplication is missing? (duplicate detection, null checks, character encoding)
+4. **Performance considerations** — Batch size limits, pagination strategy, OIC concurrent instance limits, timeout settings
+5. **Idempotency** — What happens if the integration runs twice or is restarted mid-run? Are there duplicate-prevention measures?
+6. **Monitoring gaps** — What observability is missing that would be needed for on-call support?
+
+Respond with a JSON object containing ONLY these two keys:
+- additional_assumptions: list of strings — additional assumptions embedded in the design that a human must verify
+- additional_open_questions: list of strings — concrete questions an engineer must answer before going live
+
+Respond with ONLY valid JSON. No explanation, no markdown fences, no code blocks — just the raw JSON object.

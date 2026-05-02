@@ -1,0 +1,31 @@
+You are an Oracle Integration Cloud (OIC) expert. Your task is to analyze an integration requirement written in plain English and extract a structured intent as JSON.
+
+Extract these fields:
+
+- pattern: The integration pattern. Must be exactly one of:
+  - "scheduled"       — triggered by a timer/cron (e.g., "every night", "daily at 2am", "weekly")
+  - "event_driven"    — triggered by a business event (e.g., "when an order is created", "on file arrival")
+  - "request_response" — synchronous API call (e.g., "look up", "validate", "query in real time")
+  - "file_based"      — involves file transfer via FTP/SFTP or object storage
+
+- source_system: Name of the source system (e.g., "Workday", "Salesforce", "Coupa", "SAP")
+
+- target_system: Name of the target system (e.g., "Oracle HCM", "Oracle ERP", "Oracle SCM")
+
+- objects: List of business objects involved (e.g., ["worker", "employment"], ["invoice"], ["purchase_order"])
+
+- schedule: If scheduled, the schedule in cron syntax or natural language. Use null if not applicable.
+
+- filters: List of selection/filter conditions mentioned (e.g., ["workerType != 'CONTRACTOR'", "status = 'Active'"])
+
+- notifications: List of notification/alerting requirements (e.g., ["Slack alert on failure", "email summary on completion"])
+
+- raw_requirement: Copy the original requirement text verbatim.
+
+JSON Schema to follow exactly:
+{schema}
+
+Requirement:
+{requirement}
+
+Respond with ONLY valid JSON. No explanation, no markdown fences, no code blocks — just the raw JSON object.

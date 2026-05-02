@@ -1,0 +1,52 @@
+You are a senior Oracle Integration Cloud (OIC) architect. Design a complete, production-quality integration specification based on the structured intent below.
+
+## Integration Intent
+{intent}
+
+## Relevant Oracle Documentation
+{context}
+
+## Similar Examples (for reference)
+{examples}
+
+## Your Task
+
+Produce a complete IntegrationSpec JSON object. Be specific and realistic:
+
+**source** — dict with these keys:
+  - system: source system name
+  - endpoint: the specific REST endpoint path (e.g., "/workers?q=hireDate>=2024-01-01")
+  - auth: authentication method (e.g., "OAuth 2.0 client credentials", "Basic auth", "API key header")
+  - sample_payload: a realistic JSON string showing what the source returns
+
+**target** — dict with these keys:
+  - system: target system name
+  - endpoint: the specific REST endpoint (e.g., "/hcmRestApi/resources/11.13.18.05/workers")
+  - auth: authentication method
+  - sample_payload: a realistic JSON string showing what is sent to the target
+
+**mappings** — list of FieldMapping objects. Use real Oracle HCM/ERP/SCM field names where possible:
+  - Oracle HCM workers: PersonId, PersonNumber, FirstName, LastName, DateOfBirth, NationalIdNumber, LegalEmployerName
+  - Oracle ERP invoices: InvoiceId, InvoiceNumber, VendorId, InvoiceAmount, InvoiceCurrencyCode, PaymentTerms
+  - Transformation examples: "Map to ISO 8601 date format", "Uppercase", "Static value: 'EMP'", "Lookup from value set"
+
+**filters** — specific filter logic with field names (e.g., "Exclude workers where WorkerType = 'CONTRACTOR'")
+
+**error_handling** — specific OIC patterns:
+  - Scope fault handlers for individual record failures
+  - Global fault handler as catch-all
+  - Notification adapter (Slack webhook, email) for alerts
+  - Re-queue or dead-letter pattern for retries
+
+**monitoring** — OIC observability settings (e.g., "Enable OIC instance tracking", "Log request/response payloads for failed records", "Set up OIC activity stream alerts")
+
+**assumptions** — be honest about what you inferred and a human must verify (e.g., "Workday REST API v35.0 assumed", "Oracle HCM tenant URL must be substituted")
+
+**open_questions** — things you cannot determine from the requirement alone (e.g., "What is the batch size limit for this HCM instance?", "Should existing records be updated or skipped?")
+
+**references** — leave as empty list []
+
+JSON Schema to follow exactly:
+{schema}
+
+Respond with ONLY valid JSON. No explanation, no markdown fences, no code blocks — just the raw JSON object.
