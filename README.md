@@ -169,6 +169,26 @@ The tool produces a complete design document containing:
 
 ---
 
+## What happens after an intent is issued?
+
+When you submit a requirement, the tool works through four steps in sequence. Each step is doing real, meaningful work — here is what is happening behind the scenes and why it takes the time it does.
+
+**Step 1 — The AI reads your sentence (2–5 seconds)**
+The tool sends your plain-English requirement to Claude, which reads it and pulls out the key facts: which systems are involved, what type of integration it is, what filters apply, and whether any notifications were mentioned. This comes back quickly because it is a focused, well-defined task.
+
+**Step 2 — The document library is searched (5–15 seconds)**
+The tool loads a pre-built index of 11 Oracle reference documents and searches for the pages most relevant to your requirement. It uses an AI embedding model to understand meaning — not just keywords — so it finds the right pages even if you used different words than the documentation does. On the very first run this model is loaded into memory, which takes a little longer. Every run after that it is already ready.
+
+**Step 3 — The full design is written (60–90 seconds)**
+This is where the heavy lifting happens. The tool gives Claude your intent, the 6 most relevant documentation pages, and 2 worked examples, then asks it to produce a complete integration design as a structured document. This includes endpoints, field mappings, error handling, sample payloads, and more. Generating a thorough, structured response of this size takes time — and that is a sign the output is detailed, not that something is wrong.
+
+**Step 4 — A second review pass runs (30–60 seconds)**
+A separate AI call reads the full design and asks a different question: "what did we assume, and what did we miss?" This critic pass is what adds the assumptions and open questions sections. It runs independently so it can catch things the first pass was too confident about.
+
+> In a production deployment, steps 2–4 can be significantly optimised — the document index can be pre-loaded into memory at server startup, the design and critic calls can run with a higher API rate limit tier, and responses can be streamed token by token so the user sees output appearing in real time rather than waiting for the full result. The current version is a working prototype that prioritises correctness and completeness over speed.
+
+---
+
 ## Quickstart
 
 ```bash
