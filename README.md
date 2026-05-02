@@ -4,6 +4,14 @@ A tool that turns a plain-English description of a business integration into a r
 
 > Built for the Capgemini Oracle Cloud + AI engineering team as a demonstration of how AI can accelerate integration consulting work.
 
+```mermaid
+flowchart LR
+    W["🔵  Workday\nSource System"]:::workday -->|"Oracle Integration Cloud\nAI-generated spec"| O["🔴  Oracle HCM\nTarget System"]:::oracle
+
+    classDef workday fill:#0073C6,stroke:#005a9e,color:#ffffff,font-size:16px
+    classDef oracle fill:#C74634,stroke:#9e2f1f,color:#ffffff,font-size:16px
+```
+
 ---
 
 ## Acronyms
