@@ -4,6 +4,21 @@ A tool that turns a plain-English description of a business integration into a r
 
 > Built for the Capgemini Oracle Cloud + AI engineering team as a demonstration of how AI can accelerate integration consulting work.
 
+---
+
+## Try It Yourself
+
+No setup required. Open the link below, type an integration requirement, and click **Generate Spec**.
+
+**[oracle-integration-copilot.streamlit.app](https://oracle-integration-copilot.streamlit.app/)**
+
+Example requirements to try:
+- *Sync new Workday hires to Oracle HCM every night at 2am. Skip contractors.*
+- *When a Coupa purchase order is approved, create a matching order in Oracle ERP.*
+- *Every night, sync Salesforce closed-won deals to Oracle ERP as invoices.*
+
+---
+
 ```mermaid
 flowchart LR
     W["🔵  Workday\nSource System"]:::workday -->|"Oracle Integration Cloud\nAI-generated spec"| O["🔴  Oracle HCM\nTarget System"]:::oracle
