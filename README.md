@@ -78,6 +78,20 @@ This tool cuts that down to under 2 minutes. You type what you need in plain Eng
 
 ---
 
+## Tech Stack
+
+| Layer | Tool | Role in this project |
+|---|---|---|
+| Web UI | Streamlit | Browser interface — text input, live spec rendering, download button |
+| LLM | Anthropic Claude | Parses plain-English requirements, generates integration designs, runs the critic review pass |
+| Vector database | FAISS | Stores and searches the 11 Oracle reference documents by meaning, not just keywords |
+| RAG pipeline | LangChain | Splits documents into chunks, wraps the embedding model, and connects to FAISS |
+| Embeddings | HuggingFace sentence-transformers | Converts text to vectors locally — no API cost, no rate limits |
+| Schema validation | Pydantic | Enforces the data contract between every layer of the pipeline |
+| Config | python-dotenv | Loads API keys and settings from `.env` without touching code |
+
+---
+
 ## Data Sources
 
 The tool has been pre-loaded with 11 reference documents written from Oracle's public documentation. Think of these as the tool's "textbook" — it reads the relevant chapters before answering your question.
